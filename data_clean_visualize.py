@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
 
 train = pd.read_csv("data/train.csv")
 test = pd.read_csv("data/test.csv")
@@ -40,6 +41,21 @@ heat_fig.set_size_inches((10,10))
 heat_fig.savefig("output/feature-corr.png", dpi=400)
 
 
+def data_clean(df):
+
+    """Cleans data and returns minmax-scaled and original DataFrames"""
+
+    # ----------- PREPROCESSING ----------- #
+    df.drop(["PassengerId","Name", "Ticket", "Cabin"], axis=1, inplace=True)
+    df = pd.get_dummies(df)
+    df.dropna(inplace=True)
+
+    colnames = df.columns
+    scaler = MinMaxScaler()
+
+    scaled_df = pd.DataFrame(scaler.fit_transform(df), columns=colnames)
+
+    return df, scaled_df
 
 
 
