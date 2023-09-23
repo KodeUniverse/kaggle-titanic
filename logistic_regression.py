@@ -18,4 +18,10 @@ test = pd.read_csv("data/test.csv")
 
 train, scaled_train = data_clean(train)
 
-#model = LogisticRegression()
+X_train = scaled_train.drop("Survived", axis=1)
+Y_train =  scaled_train.loc[:,"Survived"]
+X_test = test
+
+# model = LogisticRegression()
+# model.fit(X_train, Y_train)
+
