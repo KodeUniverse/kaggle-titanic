@@ -2,10 +2,16 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
 from sklearn.preprocessing import MinMaxScaler
 
 train = pd.read_csv("data/train.csv")
 test = pd.read_csv("data/test.csv")
+
+# Data Shapes
+
+print(f"Training Data Shape: {train.shape} \n Testing Data Shape: {test.shape}")
 
 """
 GRAPHS AND PLOTS
@@ -46,10 +52,10 @@ def data_clean(df):
     """Cleans data and returns minmax-scaled and original DataFrames"""
 
     # ----------- PREPROCESSING ----------- #
+    df.ffill(inplace=True)
     df.drop(["PassengerId","Name", "Ticket", "Cabin"], axis=1, inplace=True)
     df = pd.get_dummies(df)
-    df.dropna(inplace=True)
-
+    
     colnames = df.columns
     scaler = MinMaxScaler()
 

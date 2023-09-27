@@ -18,10 +18,23 @@ test = pd.read_csv("data/test.csv")
 
 train, scaled_train = data_clean(train)
 
+
+
 X_train = scaled_train.drop("Survived", axis=1)
 Y_train =  scaled_train.loc[:,"Survived"]
 X_test = test
 
-# model = LogisticRegression()
-# model.fit(X_train, Y_train)
+# save PassengerId for adding back to output
+passengerIDs = X_test.loc[:,"PassengerId"]
 
+X_test.drop(["PassengerId","Name", "Cabin", "Ticket"], axis=1, inplace=True)
+X_test = pd.get_dummies(X_test)
+X_test.ffill(inplace=True)
+model = LogisticRegression()
+model.fit(X_train, Y_train)
+
+y_pred = model.predict(X_test)
+# ----------- OUTPUT ----------- #
+y_pred = pd.DataFrame({"PassengerId":passengerIDs, "Survived":y_pred.astype(int)})
+y_pred.set_index("PassengerId", inplace=True)
+y_pred.to_csv("output/y_pred.csv")
