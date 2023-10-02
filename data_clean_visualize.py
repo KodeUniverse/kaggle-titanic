@@ -12,7 +12,6 @@ test = pd.read_csv("data/test.csv")
 # Data Shapes
 
 print(f"Training Data Shape: {train.shape} \n Testing Data Shape: {test.shape}")
-
 """
 GRAPHS AND PLOTS
 """
@@ -46,24 +45,16 @@ heat_fig = heatmap.get_figure()
 heat_fig.set_size_inches((10,10))
 heat_fig.savefig("output/feature-corr.png", dpi=400)
 
+def preprocess(df):
 
-def data_clean(df):
-
-    """Cleans data and returns minmax-scaled and original DataFrames"""
-
-    # ----------- PREPROCESSING ----------- #
     df.ffill(inplace=True)
-    df.drop(["PassengerId","Name", "Ticket", "Cabin"], axis=1, inplace=True)
+    alone_col = np.where(df["SibSp"] + df["Parch"] > 0, 1, 0)
+    df.drop(["PassengerId","Name", "Ticket", "Cabin", "SibSp", "Parch"], axis=1, inplace=True)
+    df["TraveledAlone"] = alone_col
     df = pd.get_dummies(df)
     
-    colnames = df.columns
-    scaler = MinMaxScaler()
-
-    scaled_df = pd.DataFrame(scaler.fit_transform(df), columns=colnames)
-
-    return df, scaled_df
-
-
+    colnames = list(df.columns)
+    return pd.DataFrame(df, columns=colnames)
 
 
 
