@@ -61,8 +61,3 @@ heat_fig.set_size_inches((10,10))
 heat_fig.savefig("output/feature-corr.png", dpi=400)
 print(np.array(train.corr()))
 
-
-
-
-
-

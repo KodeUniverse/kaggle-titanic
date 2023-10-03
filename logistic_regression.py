@@ -30,8 +30,10 @@ y_pred = model.predict(X_test)
 # ----------- OUTPUT ----------- #
 y_pred = pd.DataFrame({"PassengerId":passengerIDs, "Survived":y_pred.astype(int)})
 y_pred.set_index("PassengerId", inplace=True)
-y_pred.to_csv("output/y_pred.csv")
+y_pred.to_csv("output/logistic_pred.csv")
 
 
 # ----------- TRAINING ACCURACY ----------- #
-print(f"{confusion_matrix(y_true[:418], y_pred)}\nTraining Accuracy: {accuracy_score(y_true[:418], y_pred)}")
+train_pred = model.predict(X_train)
+
+print(f"{confusion_matrix(y_true, train_pred)}\nTraining Accuracy: {accuracy_score(y_true, train_pred)}")
