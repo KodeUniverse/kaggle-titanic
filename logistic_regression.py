@@ -1,11 +1,12 @@
 import pandas as pd
-import numpy as np
 from data_clean_visualize import preprocess
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.preprocessing import MinMaxScaler
 train = pd.read_csv("data/train.csv")
 test = pd.read_csv("data/test.csv")
+
+# ----------- PREPROCESSING ----------- #
 
 # save PassengerId for adding back to output
 passengerIDs = test.loc[:,"PassengerId"]

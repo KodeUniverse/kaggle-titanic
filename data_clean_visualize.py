@@ -18,16 +18,14 @@ def preprocess(df):
     colnames = list(df.columns)
     return pd.DataFrame(df, columns=colnames)
 
-
 train = pd.read_csv("data/train.csv")
 test = pd.read_csv("data/test.csv")
 
 # Data Shapes
 
 print(f"Training Data Shape: {train.shape} \n Testing Data Shape: {test.shape}")
-"""
-GRAPHS AND PLOTS
-"""
+
+# ----------- GRAPHS AND PLOTTING ----------- #
 
 # Feature distributions
 
@@ -37,15 +35,14 @@ fig.set_size_inches(10,8)
 fig.tight_layout(pad=2.5)
 # Count plots
 for ind, val in enumerate(["Sex","Survived", "Pclass"]):
-    sns.countplot(train, x=val, ax=axes[0][ind])
+    sns.countplot(train, x=val, ax=axes[0][ind], palette=['#6732c2', '#c23232', '#1f6b10'])
 
-sns.histplot(train, x="Age", kde=True, ax=axes[1][0])
+sns.histplot(train, x="Age", kde=True, ax=axes[1][0], color = '#6732c2')
 
-sns.countplot(train, x="Survived", hue="Sex", ax=axes[1][1])
-
+sns.countplot(train, x="Survived", hue="Sex", ax=axes[1][1], palette=['#6732c2', '#c23232', '#1f6b10'])
 
 train = preprocess(train)
-sns.countplot(train, x="TraveledAlone", ax=axes[1][2]) # Feature TraveledAlone is only created after preprocess() call
+sns.countplot(train, x="TraveledAlone", ax=axes[1][2], palette=['#6732c2', '#c23232', '#1f6b10']) # Feature TraveledAlone is only created after preprocess() call
 
 fig.savefig("output/feature-dist.png")
 
@@ -59,5 +56,4 @@ heatmap = sns.heatmap(train.corr(), annot=np.array(train.corr()), fmt='.2f', cma
 heat_fig = heatmap.get_figure()
 heat_fig.set_size_inches((10,10))
 heat_fig.savefig("output/feature-corr.png", dpi=400)
-print(np.array(train.corr()))
 

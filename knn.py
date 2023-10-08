@@ -2,7 +2,9 @@ import pandas as pd
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from data_clean_visualize import preprocess
-from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.metrics import accuracy_score
+
+# ----------- PREPROCESSING ----------- #
 
 train = pd.read_csv("data/train.csv")
 test = pd.read_csv("data/test.csv")
